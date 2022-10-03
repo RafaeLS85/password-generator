@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --main-bg-color: #24232B;
+      --green: #A4FFAF;
+  }
+  
+  .button { 
+      background-color: var(--green);
+  }
+  
+  .box {
+      margin: 10px auto;
+    width: 300px;
+      padding: 20px;
+      background-color: var(--main-bg-color);
+  }
+  

@@ -1,34 +1,87 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState } from "react";
+import CopyImg from "./assets/copy-img";
+import styles from "./styles.module.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [value, setValue] = useState("10");
+  const [password, setPassword] = useState(null);
+
+  const onHandleCopy = () => {
+    console.log("copy");
+  };
+
+  function Password({ password }) {
+    return (
+      <div className={`flex ${styles.box}`}>
+        <div className="w-1/2 text-start "> {password} </div>
+        <div className="w-1/2 text-end">
+          <CopyImg
+            className="justify-center mx-2"
+            fill="#A4FFAF"
+            onClick={() => onHandleCopy()}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  function Generator() {
+    const onHandleCopy = () => {
+      console.log("copy");
+    };
+
+    return (
+      <div className={styles.box}>
+        <form>
+          <div className="flex">
+            <div className="w-1/2 text-start ">Caracter Length</div>
+            <div className="w-1/2 text-end">{value}</div>
+          </div>
+
+          <input
+            className="w-full"
+            type="range"
+            min="1"
+            max="20"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
+
+          <div className="w-full">
+            <label>
+              <input type="checkbox" id="cbox1" value="first_checkbox" />{" "}
+              Include Uppercase Letters{" "}
+            </label>
+          </div>
+
+          <div className="w-full">
+            <label>
+              <input type="checkbox" id="cbox1" value="first_checkbox" />{" "}
+              Include Lowercase Letters{" "}
+            </label>
+          </div>
+          <div className="w-full">
+            <label>
+              <input type="checkbox" id="cbox1" value="first_checkbox" />{" "}
+              Include Numbers{" "}
+            </label>
+          </div>
+          <div className="w-full">
+            <label>
+              <input type="checkbox" id="cbox1" value="first_checkbox" />{" "}
+              Include Symbols{" "}
+            </label>
+          </div>
+        </form>
+      </div>
+    );
+  }
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div className="grid place-items-center text-white">
+      <h2>Password Generator</h2>
+      <Password password={password} />
+      <Generator />
     </div>
-  )
+  );
 }
-
-export default App
