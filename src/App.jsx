@@ -6,15 +6,21 @@ export default function App() {
   const [value, setValue] = useState("10");
   const [password, setPassword] = useState(null);
 
+
   const onHandleCopy = () => {
     console.log("copy");
   };
 
   function Password({ password }) {
+
+    
+    password = "1234"
+
+
     return (
-      <div className={`flex ${styles.box}`}>
-        <div className="w-1/2 text-start "> {password} </div>
-        <div className="w-1/2 text-end">
+      <div className={`flex ${styles.box} justify-between`}>
+        <div className=""> {password} </div>
+        <div className="">
           <CopyImg
             className="justify-center mx-2"
             fill="#A4FFAF"
@@ -25,10 +31,29 @@ export default function App() {
     );
   }
 
-  function Generator() {
+  function Strength(){
+    return (
+      <h1>Strength</h1>
+    )
+  }
+
+  function Generator({children, pass_length}) {
+
+
     const onHandleCopy = () => {
       console.log("copy");
     };
+
+    function createPassword(pass_length){
+      let pass
+      const chars = '0123456789abcdefghijklmnopqrstuvwxyz'
+
+      
+
+
+      console.log("creating password...", pass_length)
+
+    }  
 
     return (
       <div className={styles.box}>
@@ -73,6 +98,8 @@ export default function App() {
             </label>
           </div>
         </form>
+        {children}
+        <button onClick={ () => createPassword(value) } >GENERATE</button>
       </div>
     );
   }
@@ -81,7 +108,9 @@ export default function App() {
     <div className="grid place-items-center text-white">
       <h2>Password Generator</h2>
       <Password password={password} />
-      <Generator />
+      <Generator>
+          <Strength />
+      </Generator>
     </div>
   );
 }
