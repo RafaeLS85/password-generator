@@ -1,27 +1,28 @@
-import { useState } from "react";
 import CopyImg from "./assets/copy-img";
+import useGeneratePass from "./hooks/useGeneratePass";
 import styles from "./styles.module.css";
 
-export default function App() {
-  const [value, setValue] = useState("8");
-  const [password, setPassword] = useState(null);
-  const [, setIsCopied] = useState(false);
+export default function App() { 
 
-  function Password({ password }) {
+  const { 
+    password, 
+    password_length, 
+    setPasswordLength,
+    includeUpperCase, 
+    setIncludeUpperCase,
+    includeLowerCase, 
+    setIncludeLowerCase, 
+    includeNumbers,
+    setIncludeNumbers ,
+    includeSymbols,
+    setIncludeSymbols,
+    createPassword,
+    onHandleCopy
+  } = useGeneratePass()
 
-    const onHandleCopy = () => {
-      copyTextToClipboard(password)
-        .then(() => {
-          setIsCopied(true);
-          alert('Password Copy To Clipboard')
-        })
-        .catch((err) => {
-          setIsCopied(false);
-          console.log(err);
-        });
-    }
-    
-    return (
+  return (
+    <div className="grid place-items-center text-white">
+      <h2>Password Generator</h2>     
       <div className={`flex ${styles.box} justify-between`}>
         <div className={styles.password}> {password} </div>
         <div className={  password ? `cursor-pointer` : `opacity-20 pointer-events-none` }>
@@ -32,108 +33,50 @@ export default function App() {
           />
         </div>    
       </div>
-    );
-  }
-
-  function Strength(){
-    return (
-      <h1>Strength</h1>
-    )
-  }
-
-  function Generator({children, pass_length}) {
-
-    let pass = ''
-
-    const onHandleCopy = () => {
-      console.log("copy");
-    };
-
-    function createPassword(pass_length){
-      
-      const chars = '0123456789abcdefghijklmnopqrstuvwxyz'
-
-      const array = new Uint32Array(pass_length)
-      window.crypto.getRandomValues(array)
-      console.log({array})
-
-      // setPassword()
-
-      for (let i = 0; i < pass_length; i++) {
-        console.log(i)
-        pass += chars[array[i] % chars.length ]
-      }
-      setPassword(pass)
-      return pass
-    }  
-
-    return (
       <div className={styles.box}>
         <form>
           <div className="flex">
             <div className="w-1/2 text-start text-slate-500 text-sm ">Caracter Length</div>
-            <div className={`w-1/2 text-end  ${styles.num_length}  `}>{value}</div>
+            <div className={`w-1/2 text-end  ${styles.num_length}  `}>{password_length}</div>
           </div>
-
           <input
             className="w-full"
             type="range"
             min="4"
             max="16"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
+            value={password_length}
+            onChange={(e) => setPasswordLength(e.target.value)}
           />
-
           <div className="w-full">
             <label className="text-slate-500 text-sm" >
-              <input type="checkbox" id="cbox1" value="first_checkbox"  />{" "}
-              Include Uppercase Letters{" "}
+              <input type="checkbox" id="upperCase" value="first_checkbox" checked={includeUpperCase} onChange={ () => setIncludeUpperCase(!includeUpperCase) } />{" "}
+              Include Uppercase Letters
             </label>
           </div>
 
           <div className="w-full">
             <label className="text-slate-500 text-sm">
-              <input type="checkbox" id="cbox1" value="first_checkbox"   />{" "}
+              <input type="checkbox" id="lowerCase" value="first_checkbox" checked={includeLowerCase} onChange={ () => setIncludeLowerCase(!includeLowerCase) }  />{" "}
               Include Lowercase Letters{" "}
             </label>
           </div>
           <div className="w-full">
             <label className="text-slate-500 text-sm">
-              <input type="checkbox" id="cbox1" value="first_checkbox"  />{" "}
-              Include Numbers{" "}
+              <input type="checkbox" id="numbers" value="first_checkbox" checked={includeNumbers } onChange={ () => setIncludeNumbers(!includeNumbers) } />{" "}              Include Numbers{" "}
             </label>
           </div>
           <div className="w-full">
             <label className="text-slate-500 text-sm">
-              <input type="checkbox" id="cbox1" value="first_checkbox"  />{" "}
+              <input type="checkbox" id="symbols" value="first_checkbox"  checked={includeSymbols } onChange={ () => setIncludeSymbols (!includeSymbols ) } />{" "}
               Include Symbols{" "}
             </label>
           </div>
         </form>
-        {children}
+        <h1>Strength</h1>
         <div className=" text-center ">
-          <button className={`${styles.generate_btn} text-slate-900 `} onClick={ () => createPassword(value) } >GENERATE</button>
+          <button className={`${styles.generate_btn} text-slate-900 `} onClick={ () => createPassword(password_length) } >GENERATE</button>
         </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="grid place-items-center text-white">
-      <h2>Password Generator</h2>
-      <Password password={password} />
-      <Generator>
-          <Strength />
-      </Generator>
+      </div>    
     </div>
   );
-}
-
-
-export async function copyTextToClipboard(text) {
-  if ('clipboard' in navigator) {
-    return await navigator.clipboard.writeText(text);
-  } else {
-    return document.execCommand('copy', true, text);
-  }
 }
