@@ -3,18 +3,27 @@
 @tailwind utilities;
 
 :root {
-    --main-bg-color: #24232B;
-      --green: #A4FFAF;
+  --main-bg-color: #24232B;
+  --green: #A4FFAF;
   }
   
-  .button { 
-      background-color: var(--green);
+  .generate_btn { 
+    padding: 8px;
+    background-color: var(--green);
   }
-  
   .box {
       margin: 10px auto;
-    width: 300px;
+      width: 350px;
       padding: 20px;
       background-color: var(--main-bg-color);
   }
   
+  .num_length{
+    color: var(--green);
+  }
+
+  .password{
+    font-weight: 600;
+    font-size: 20px;
+    color: #ffffff;
+  }

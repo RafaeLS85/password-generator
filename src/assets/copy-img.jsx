@@ -1,5 +1,5 @@
 const CopyImg = (props) => (
-	<svg width={24} height={24} xmlns='http://www.w3.org/2000/svg' {...props}>
+	<svg width={25} height={25} xmlns='http://www.w3.org/2000/svg' {...props}>
 		<path
 			fillRule='evenodd'
 			d='M7.024 3.75c0-.966.784-1.75 1.75-1.75H20.25c.966 0 1.75.784 1.75 1.75v11.498a1.75 1.75 0 0 1-1.75 1.75H8.774a1.75 1.75 0 0 1-1.75-1.75V3.75zm1.75-.25a.25.25 0 0 0-.25.25v11.498c0 .139.112.25.25.25H20.25a.25.25 0 0 0 .25-.25V3.75a.25.25 0 0 0-.25-.25H8.774z'
