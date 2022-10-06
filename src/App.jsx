@@ -74,7 +74,7 @@ export default function App() {
         </form>
         <h1>Strength</h1>
         <div className=" text-center ">
-          <button className={`${styles.generate_btn} text-slate-900 `} onClick={ () => createPassword(password_length) } >GENERATE</button>
+          <button className={`${styles.generate_btn} text-slate-900 `} onClick={ () => createPassword({password_length, includeUpperCase, includeLowerCase, includeNumbers, includeSymbols}) } >GENERATE</button>
         </div>
       </div>    
     </div>

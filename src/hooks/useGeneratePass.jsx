@@ -35,26 +35,39 @@ export default function useGeneratePass(){
       }
 
 
-      function createPassword(pass_length){
+      function createPassword({password_length, includeUpperCase, includeLowerCase, includeNumbers, includeSymbols }){
 
-        let pass = ''
-      
-        const chars = '0123456789abcdefghijklmnopqrstuvwxyz'
+        if(!includeUpperCase && !includeLowerCase && !includeNumbers && !includeSymbols) return
+        
+        let pass = ''        
+        let chars = ''
+        
+        includeUpperCase ? chars += uppercaseLetters : null
+        includeLowerCase ? chars += lowercaseLetters : null
+        includeNumbers ? chars += numbers : null
+        includeSymbols ? chars += symbols : null
+
   
-  
-        const array = new Uint32Array(pass_length)
+        const array = new Uint32Array(password_length)
         window.crypto.getRandomValues(array)
         console.log({array})
   
-        // setPassword()
+       // en base a lo que este seleccionado se debe generar un nuevo string con todos los caracteres:
+       // chars debe estar vacio al comienzo, el boton se debe habilitar cuando el usuario al menos selecciona una opcion:
+
   
-        for (let i = 0; i < pass_length; i++) {
+        for (let i = 0; i < password_length; i++) {
           console.log(i)
           pass += chars[array[i] % chars.length ]
         }
         setPassword(pass)
         return pass
-      }  
+      }     
+
+
+      function addDataToChars(){
+
+      }
 
 
 
