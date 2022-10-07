@@ -7,7 +7,7 @@ export default function useGeneratePass() {
   const [includeUpperCase, setIncludeUpperCase] = useState(false);
   const [includeLowerCase, setIncludeLowerCase] = useState(false);
   const [includeNumbers, setIncludeNumbers] = useState(false);
-  const [includeSymbols, setIncludeSymbols] = useState(false);
+  const [includeSymbols, setIncludeSymbols] = useState(false);  
 
   const lowercaseLetters = "abcdefghijklmnñopqrstuvwxyz";
   const uppercaseLetters = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
@@ -36,9 +36,9 @@ export default function useGeneratePass() {
 
   const stepsConversor = (input) => input / 5;
 
-  function validateGeneration({ check_a, check_b, check_c, check_d }) {
+  function checksValidatior({ check_a, check_b, check_c, check_d }) {
     if (!check_a && !check_b && !check_c && !check_d) return true;
-  }
+  } 
 
   function enableButton({
     password_length,
@@ -48,7 +48,7 @@ export default function useGeneratePass() {
     includeUpperCase,
   }) {
     const cheksValidation =
-      validateGeneration({
+      checksValidatior({
         check_a: includeUpperCase,
         check_b: includeLowerCase,
         check_c: includeNumbers,
@@ -66,7 +66,7 @@ export default function useGeneratePass() {
     includeSymbols,
   }) {
     if (
-      validateGeneration({
+      checksValidatior({
         check_a: includeUpperCase,
         check_b: includeLowerCase,
         check_c: includeNumbers,
@@ -83,18 +83,52 @@ export default function useGeneratePass() {
     includeSymbols ? (chars += symbols) : null;
 
     const array = new Uint32Array(password_length);
-    window.crypto.getRandomValues(array);
-    console.log({ array });
+    window.crypto.getRandomValues(array);    
 
-    // en base a lo que este seleccionado se debe generar un nuevo string con todos los caracteres:
-    // chars debe estar vacio al comienzo, el boton se debe habilitar cuando el usuario al menos selecciona una opcion:
-
-    for (let i = 0; i < password_length; i++) {
-      console.log(i);
+    for (let i = 0; i < password_length; i++) {      
       pass += chars[array[i] % chars.length];
     }
     setPassword(pass);
     return pass;
+  }
+
+  function getStrength() {
+    const LEVELS = ["", "WEAK", "MEDIUM", "STRONG"];
+
+    const cheksValidation =
+      checksValidatior({
+        check_a: includeUpperCase,
+        check_b: includeLowerCase,
+        check_c: includeNumbers,
+        check_d: includeSymbols,
+      }) === true;
+
+    if (password_length === 0) {
+      return LEVELS[0];
+    }
+
+    if (cheksValidation) return LEVELS[0];
+
+    if (stepsConversor(password_length) === 4) {
+      return LEVELS[1];
+    }
+
+    if (stepsConversor(password_length) === 8) {
+      return LEVELS[2];
+    }
+    
+    if (
+      stepsConversor(password_length) > 8 &&
+      (includeSymbols && includeUpperCase && includeLowerCase)
+    ) {
+      return LEVELS[3];
+    }
+
+    if (stepsConversor(password_length) > 8) {
+      return LEVELS[2];
+    }
+
+    return LEVELS[0];
   }
 
   return {
@@ -113,5 +147,6 @@ export default function useGeneratePass() {
     onHandleCopy,
     stepsConversor,
     enableButton,
+    getStrength,
   };
 }
