@@ -4,7 +4,6 @@ import styles from "./styles.module.css";
 
 export default function App() {
 
-
   const slider = document.getElementById("lengthRange");
   
   slider?.addEventListener("input", () => {
@@ -12,8 +11,6 @@ export default function App() {
     let color = `linear-gradient( 90deg, rgb(117, 252, 117) ${x}%, rgb(214, 214, 214)  ${x}% )`
     slider.style.background = color;
  })
-
-//  0 = 0, 20 = 8, 40 = 12, 60 = 16, 80 = 20, 100 = 32 
 
   const {
     password,
@@ -29,7 +26,9 @@ export default function App() {
     setIncludeSymbols,
     createPassword,
     onHandleCopy,
-  } = useGeneratePass();
+    stepsConversor,
+    enableButton   
+  } = useGeneratePass();  
 
   return (
     <main id='rafaels85'>
@@ -57,7 +56,7 @@ export default function App() {
               Caracter Length
             </div>
             <div className={`w-1/2 text-end  ${styles.num_length}  `}>
-              {password_length}
+              {  stepsConversor(password_length) }
             </div>
           </div>
           <input
@@ -74,6 +73,7 @@ export default function App() {
             <label className="text-slate-500 text-sm">
               <input
                 type="checkbox"
+                className="accent-[#A4FFAF]"
                 id="upperCase"                
                 checked={includeUpperCase}
                 onChange={() => setIncludeUpperCase(!includeUpperCase)}
@@ -86,6 +86,7 @@ export default function App() {
             <label className="text-slate-500 text-sm">
               <input
                 type="checkbox"
+                className="accent-[#A4FFAF]"
                 id="lowerCase"                
                 checked={includeLowerCase}
                 onChange={() => setIncludeLowerCase(!includeLowerCase)}
@@ -97,6 +98,7 @@ export default function App() {
             <label className="text-slate-500 text-sm">
               <input
                 type="checkbox"
+                className="accent-[#A4FFAF]"
                 id="numbers"                
                 checked={includeNumbers}
                 onChange={() => setIncludeNumbers(!includeNumbers)}
@@ -108,6 +110,7 @@ export default function App() {
             <label className="text-slate-500 text-sm">
               <input
                 type="checkbox"
+                className="accent-[#A4FFAF]"
                 id="symbols"                
                 checked={includeSymbols}
                 onChange={() => setIncludeSymbols(!includeSymbols)}
@@ -119,10 +122,10 @@ export default function App() {
         <h1>Strength</h1>
         <div className=" text-center ">
           <button
-            className={`${styles.generate_btn} text-slate-900 `}
+            className={`${styles.generate_btn} text-slate-900  ${ enableButton({password_length,includeSymbols,includeNumbers,includeLowerCase, includeUpperCase }) ? 'cursor-pointer' : 'opacity-20 pointer-events-none' } `}
             onClick={() =>
               createPassword({
-                password_length,
+                password_length: stepsConversor(password_length),
                 includeUpperCase,
                 includeLowerCase,
                 includeNumbers,
