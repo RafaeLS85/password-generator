@@ -10,6 +10,7 @@
   .generate_btn { 
     padding: 8px;
     background-color: var(--green);
+    width: 100%;
   }
   .box {
       margin: 10px auto;
