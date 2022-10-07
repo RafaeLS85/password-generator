@@ -59,7 +59,7 @@ export default function App() {
               </div>
             </div>
             <input
-              className={`w-ful ${styles.slider} `}
+              className={`w-full ${styles.slider} `}
               type="range"
               min="0"
               max="100"

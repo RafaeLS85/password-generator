@@ -36,7 +36,7 @@ export default function useGeneratePass() {
 
   const stepsConversor = (input) => input / 5;
 
-  function checksValidatior({ check_a, check_b, check_c, check_d }) {
+  function checksValidator({ check_a, check_b, check_c, check_d }) {
     if (!check_a && !check_b && !check_c && !check_d) return true;
   } 
 
@@ -48,7 +48,7 @@ export default function useGeneratePass() {
     includeUpperCase,
   }) {
     const cheksValidation =
-      checksValidatior({
+    checksValidator({
         check_a: includeUpperCase,
         check_b: includeLowerCase,
         check_c: includeNumbers,
@@ -66,7 +66,7 @@ export default function useGeneratePass() {
     includeSymbols,
   }) {
     if (
-      checksValidatior({
+      checksValidator({
         check_a: includeUpperCase,
         check_b: includeLowerCase,
         check_c: includeNumbers,
@@ -96,7 +96,7 @@ export default function useGeneratePass() {
     const LEVELS = ["", "WEAK", "MEDIUM", "STRONG"];
 
     const cheksValidation =
-      checksValidatior({
+    checksValidator({
         check_a: includeUpperCase,
         check_b: includeLowerCase,
         check_c: includeNumbers,
