@@ -2,81 +2,139 @@ import CopyImg from "./assets/copy-img";
 import useGeneratePass from "./hooks/useGeneratePass";
 import styles from "./styles.module.css";
 
-export default function App() { 
+export default function App() {
 
-  const { 
-    password, 
-    password_length, 
+
+  const slider = document.getElementById("lengthRange");
+  
+  slider?.addEventListener("input", () => {
+    let x = slider.value
+    let color = `linear-gradient( 90deg, rgb(117, 252, 117) ${x}%, rgb(214, 214, 214)  ${x}% )`
+    slider.style.background = color;
+ })
+
+//  0 = 0, 20 = 8, 40 = 12, 60 = 16, 80 = 20, 100 = 32 
+
+  const {
+    password,
+    password_length,
     setPasswordLength,
-    includeUpperCase, 
+    includeUpperCase,
     setIncludeUpperCase,
-    includeLowerCase, 
-    setIncludeLowerCase, 
+    includeLowerCase,
+    setIncludeLowerCase,
     includeNumbers,
-    setIncludeNumbers ,
+    setIncludeNumbers,
     includeSymbols,
     setIncludeSymbols,
     createPassword,
-    onHandleCopy
-  } = useGeneratePass()
+    onHandleCopy,
+  } = useGeneratePass();
 
   return (
+    <main id='rafaels85'>
+
     <div className="grid place-items-center text-white">
-      <h2>Password Generator</h2>     
+      <h2>Password Generator</h2>
       <div className={`flex ${styles.box} justify-between`}>
         <div className={styles.password}> {password} </div>
-        <div className={  password ? `cursor-pointer` : `opacity-20 pointer-events-none` }>
+        <div
+          className={
+            password ? `cursor-pointer` : `opacity-20 pointer-events-none`
+          }
+        >
           <CopyImg
             className="justify-center mx-2 mt-1 "
             fill="#A4FFAF"
             onClick={() => onHandleCopy()}
           />
-        </div>    
+        </div>
       </div>
       <div className={styles.box}>
         <form>
           <div className="flex">
-            <div className="w-1/2 text-start text-slate-500 text-sm ">Caracter Length</div>
-            <div className={`w-1/2 text-end  ${styles.num_length}  `}>{password_length}</div>
+            <div className="w-1/2 text-start text-slate-500 text-sm ">
+              Caracter Length
+            </div>
+            <div className={`w-1/2 text-end  ${styles.num_length}  `}>
+              {password_length}
+            </div>
           </div>
           <input
-            className="w-full"
+            className={`w-ful ${styles.slider} `}
             type="range"
-            min="4"
-            max="16"
+            min="0"
+            max="100"
+            step="20"
+            id="lengthRange"
             value={password_length}
             onChange={(e) => setPasswordLength(e.target.value)}
           />
           <div className="w-full">
-            <label className="text-slate-500 text-sm" >
-              <input type="checkbox" id="upperCase" value="first_checkbox" checked={includeUpperCase} onChange={ () => setIncludeUpperCase(!includeUpperCase) } />{" "}
+            <label className="text-slate-500 text-sm">
+              <input
+                type="checkbox"
+                id="upperCase"                
+                checked={includeUpperCase}
+                onChange={() => setIncludeUpperCase(!includeUpperCase)}
+              />{" "}
               Include Uppercase Letters
             </label>
           </div>
 
           <div className="w-full">
             <label className="text-slate-500 text-sm">
-              <input type="checkbox" id="lowerCase" value="first_checkbox" checked={includeLowerCase} onChange={ () => setIncludeLowerCase(!includeLowerCase) }  />{" "}
+              <input
+                type="checkbox"
+                id="lowerCase"                
+                checked={includeLowerCase}
+                onChange={() => setIncludeLowerCase(!includeLowerCase)}
+              />{" "}
               Include Lowercase Letters{" "}
             </label>
           </div>
           <div className="w-full">
             <label className="text-slate-500 text-sm">
-              <input type="checkbox" id="numbers" value="first_checkbox" checked={includeNumbers } onChange={ () => setIncludeNumbers(!includeNumbers) } />{" "}              Include Numbers{" "}
+              <input
+                type="checkbox"
+                id="numbers"                
+                checked={includeNumbers}
+                onChange={() => setIncludeNumbers(!includeNumbers)}
+              />{" "}
+              Include Numbers{" "}
             </label>
           </div>
           <div className="w-full">
             <label className="text-slate-500 text-sm">
-              <input type="checkbox" id="symbols" value="first_checkbox"  checked={includeSymbols } onChange={ () => setIncludeSymbols (!includeSymbols ) } />{" "}
+              <input
+                type="checkbox"
+                id="symbols"                
+                checked={includeSymbols}
+                onChange={() => setIncludeSymbols(!includeSymbols)}
+              />{" "}
               Include Symbols{" "}
             </label>
           </div>
         </form>
         <h1>Strength</h1>
         <div className=" text-center ">
-          <button className={`${styles.generate_btn} text-slate-900 `} onClick={ () => createPassword({password_length, includeUpperCase, includeLowerCase, includeNumbers, includeSymbols}) } >GENERATE</button>
+          <button
+            className={`${styles.generate_btn} text-slate-900 `}
+            onClick={() =>
+              createPassword({
+                password_length,
+                includeUpperCase,
+                includeLowerCase,
+                includeNumbers,
+                includeSymbols,
+              })
+            }
+          >
+            GENERATE
+          </button>
         </div>
-      </div>    
+      </div>
     </div>
+    </main>
   );
 }

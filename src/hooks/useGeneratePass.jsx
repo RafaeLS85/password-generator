@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 export default function useGeneratePass(){
-    const [ password_length, setPasswordLength ] = useState("8");
+    const [ password_length, setPasswordLength ] = useState("0");
     const [password, setPassword] = useState(null);
     const [, setIsCopied] = useState(false);
     const [includeUpperCase, setIncludeUpperCase] = useState(false);
